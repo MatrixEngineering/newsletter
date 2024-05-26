@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
       - name: Set up environment
         run: |
           sudo apt-get update

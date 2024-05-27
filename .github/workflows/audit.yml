@@ -1,7 +1,5 @@
 name: Security audit
-on: 
-  schedule:
-    - cron: '0 0 * * *'
+on:
   push:
     paths:
       - '**/Cargo.toml'
@@ -9,9 +7,8 @@ on:
 jobs:
   security_audit:
     runs-on: ubuntu-latest
-    steps: 
-      - uses: action/checkout@v1
-      - uses: taiki-e/install-action@cargo-deny
-      - name: Scan for vulnerabilities
-        run : cargo deny check advisories
-
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions-rs/audit-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

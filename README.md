@@ -1,6 +1,3 @@
-# Let's write the provided README content to a markdown file.
-
-readme_content = """
 # Zero2Prod
 
 Zero2Prod is a project aimed at providing a step-by-step guide to building production-ready applications with Rust and Actix Web. This repository contains the source code and documentation to help you get started with developing web applications in Rust, following best practices and industry standards.
@@ -41,5 +38,5 @@ Zero2Prod is designed to help developers transition from zero to production with
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/zero2prod.git
+git clone https://github.com/HeroTeamCambodia/zero2prod.git
 cd zero2prod

@@ -5,7 +5,10 @@ use sqlx::{Error, Pool, Postgres};
 use std::net::TcpListener;
 use tracing_actix_web::TracingLogger;
 
-pub fn run(listener: TcpListener, db_pool: Result<Pool<Postgres>, Error>) -> Result<Server, std::io::Error> {
+pub fn run(
+    listener: TcpListener,
+    db_pool: Result<Pool<Postgres>, Error>,
+) -> Result<Server, std::io::Error> {
     let connection = web::Data::new(db_pool);
     let server = HttpServer::new(move || {
         App::new()

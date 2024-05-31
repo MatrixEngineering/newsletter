@@ -80,9 +80,11 @@ jobs:
             DROPLET_IP: ${{ vars.DROPLET_IP }}
       
         - name: Setup SSH key
-          uses: webfactory/ssh-agent@v0.5.3
+        - uses: actions/checkout@v4
+            # Make sure the @v0.9.0 matches the current version of the action
+        - uses: webfactory/ssh-agent@v0.9.0
           with:
-           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
         - name: Copy docker-compose.yml to Droplet
           run: scp -o StrictHostKeyChecking=no docker-compose.yml root@${{ vars.DROPLET_IP }}:~

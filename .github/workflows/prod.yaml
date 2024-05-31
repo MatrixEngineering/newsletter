@@ -79,10 +79,11 @@ jobs:
             DROPLET_PASSWORD: ${{ secrets.DROPLET_PASSWORD }}
             DROPLET_IP: ${{ vars.DROPLET_IP }}
       
+        - name: Check out code
+          uses: actions/checkout@v4
+
         - name: Setup SSH key
-        - uses: actions/checkout@v4
-            # Make sure the @v0.9.0 matches the current version of the action
-        - uses: webfactory/ssh-agent@v0.9.0
+          uses: webfactory/ssh-agent@v0.9.0
           with:
               ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 

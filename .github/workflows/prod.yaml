@@ -79,11 +79,13 @@ jobs:
             DROPLET_PASSWORD: ${{ secrets.DROPLET_PASSWORD }}
             DROPLET_IP: ${{ vars.DROPLET_IP }}
       
-        - name: Install sshpass
-          run: sudo apt-get install sshpass
-      
-        - name: Copy docker-compose.yml to droplet to deploy
-          run: sshpass -v -p ${{ secrets.DROPLET_PASSWORD }} scp -o StrictHostKeyChecking=no docker-compose.yml root@${{ vars.DROPLET_IP }}:~
+        - name: Setup SSH key
+          uses: webfactory/ssh-agent@v0.5.3
+          with:
+           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+        - name: Copy docker-compose.yml to Droplet
+          run: scp -o StrictHostKeyChecking=no docker-compose.yml root@${{ vars.DROPLET_IP }}:~
       
         - name: Deploy
           uses: appleboy/ssh-action@master

@@ -1,5 +1,5 @@
 name: "Build, Test and Deploy to Production"
-"on":
+on:
   push:
     branches: main
 env:
@@ -29,7 +29,7 @@ jobs:
         with:
           key: "sqlx-${{ env.SQLX_VERSION }}"
       - name: Install sqlx-cli
-        run: >-
+        run: >
           cargo install sqlx-cli --version=${{ env.SQLX_VERSION }} --features
           ${{ env.SQLX_FEATURES }} --no-default-features --locked
       - name: Install postgresql-client
@@ -48,10 +48,72 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
+      - name: Debug Docker login
+        run: docker info
+
       - name: Build and push Docker images
-        uses: docker/bake-action@v2.3.0
-        with:
-          push: true
-          set: |
-            *.cache-from=type=gha
-            *.cache-to=type=gha,mode=max
+        run: |
+          docker buildx build --push --tag ${{ secrets.DOCKER_USERNAME }}/my-repo:latest .
+
+      - name: Verify Docker images
+        run: docker images
+        name: "Build, Test and Deploy to Production"
+        on:
+          push:
+            branches: main
+        env:
+          CARGO_TERM_COLOR: always
+          SQLX_VERSION: 0.7.1
+          SQLX_FEATURES: "rustls,postgres"
+        jobs:
+          build:
+            name: Test
+            runs-on: ubuntu-latest
+            services:
+              postgres:
+                image: "postgres:14"
+                env:
+                  POSTGRES_USER: postgres
+                  POSTGRES_PASSWORD: password
+                  POSTGRES_DB: postgres
+                ports:
+                  - "5432:5432"
+            steps:
+              - name: Check out repository code
+                uses: actions/checkout@v3
+              - name: Install the Rust toolchain
+                uses: dtolnay/rust-toolchain@stable
+              - name: Rust Cache Action
+                uses: Swatinem/rust-cache@v2
+                with:
+                  key: "sqlx-${{ env.SQLX_VERSION }}"
+              - name: Install sqlx-cli
+                run: >
+                  cargo install sqlx-cli --version=${{ env.SQLX_VERSION }} --features
+                  ${{ env.SQLX_FEATURES }} --no-default-features --locked
+              - name: Install postgresql-client
+                run: sudo apt-get update && sudo apt-get install postgresql-client -y
+              - name: Migrate database
+                run: SKIP_DOCKER=true ./scripts/init_db.sh
+              - name: Run tests
+                run: cargo test
+        
+              - name: Set up Docker Buildx
+                uses: docker/setup-buildx-action@v2
+        
+              - name: Log in to Docker Hub
+                uses: docker/login-action@v2
+                with:
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_TOKEN }}
+        
+              - name: Debug Docker login
+                run: docker info
+        
+              - name: Build and push Docker images
+                run: |
+                  docker buildx build --push --tag ${{ secrets.DOCKER_USERNAME }}/zero2prod:latest .
+        
+              - name: Verify Docker images
+                run: docker images
+        

@@ -5,6 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: zero2prod:latest
+    image: senmeann/zero2prod
     ports:
       - "8000:8000"

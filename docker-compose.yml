@@ -6,22 +6,17 @@ services:
       context: .
       dockerfile: Dockerfile
     image: senmeann/zero2prod
-    environment:
-      DATABASE_URL: "postgres://postgres:${POSTGRES_PASSWORD}@newsletter:5432" # Database connection string
     ports:
       - "8000:8000"
     depends_on:
-      - db # Ensure db service starts before api service
-  db:
-    image: postgres:15.2-alpine
-    restart: always
-    ports:
-      - "5432:5432"
+      - postgres-db # Ensure db service starts before api service
+  postgres-db:
+    image: postgres:9.6.23-alpine3.14
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes:
-      - db:/var/lib/postgresql/data
-
-volumes:
-    db:
-      driver: local
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=newsletter
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres", "-d", "newsletter" ]
+      start_period: 5s
+      interval: 5s

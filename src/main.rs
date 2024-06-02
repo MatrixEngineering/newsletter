@@ -11,6 +11,7 @@ async fn main() -> std::io::Result<()> {
 
     let configuration = get_configuration().expect("Failed to read configuration.");
     let connection_pool = PgPoolOptions::new().connect_lazy_with(configuration.database.with_db());
+    sqlx::migrate!("./migrations").run(&connection_pool).await?;
 
     let address = format!(
         "{}:{}",

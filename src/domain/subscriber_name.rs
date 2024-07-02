@@ -9,10 +9,10 @@ impl SubscriberName {
 
         let is_too_long = s.graphemes(true).count() > 256;
 
-        let forbidden_charecters = ['/', '(', ')', '"', '<', '>', '\\', '{', '}'];
-        let contains_forbidden_charecters = s.chars().any(|g| forbidden_charecters.contains(&g));
+        let forbidden_characters = ['/', '(', ')', '"', '<', '>', '\\', '{', '}'];
+        let contains_forbidden_characters = s.chars().any(|g| forbidden_characters.contains(&g));
 
-        if is_empty_or_whitespace || is_too_long || contains_forbidden_charecters {
+        if is_empty_or_whitespace || is_too_long || contains_forbidden_characters {
             Err(format!("{} is not valid subscriber name", s))
         } else {
             Ok(Self(s))

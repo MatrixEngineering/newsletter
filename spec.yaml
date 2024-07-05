@@ -4,7 +4,7 @@ name: zero2prod
 # `fra` stands for Frankfurt (Germany - EU)
 region: fra
 services:
-  - name: newsletter
+  - name: zero2prod
     # Relative to the repository root
     dockerfile_path: Dockerfile
     source_dir: .
@@ -46,7 +46,7 @@ databases:
   # PG = Postgres
   - engine: PG
     # Database name
-    name: newsletter-db
+    name: newsletter
     # Again, let's keep the bill lean
     num_nodes: 1
     size: db-s-dev-database

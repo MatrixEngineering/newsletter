@@ -2,7 +2,7 @@ use crate::configuration::{DatabaseSettings, Settings};
 use crate::email_client::EmailClient;
 use crate::routes::{confirm, health_check, subscribe};
 use actix_web::dev::Server;
-use actix_web::{web, App, HttpRequest, HttpServer, Responder};
+use actix_web::{web, App, HttpRequest, HttpServer};
 use sqlx::postgres::PgPoolOptions;
 use sqlx::PgPool;
 use std::net::TcpListener;
@@ -61,8 +61,8 @@ pub fn get_connection_pool(configuration: &DatabaseSettings) -> PgPool {
 
 pub struct ApplicationBaseUrl(pub String);
 
-async fn index(_req: HttpRequest) -> impl Responder {
-    web::Bytes::from_static(b"Hello world!")
+async fn index(_req: HttpRequest) -> &'static str {
+    "Hello world!"
 }
 
 pub fn run(

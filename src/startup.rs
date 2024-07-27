@@ -50,7 +50,7 @@ impl Application {
         self.port
     }
 
-    pub async fn run_until_stoped(self) -> Result<(), std::io::Error> {
+    pub async fn run_until_stopped(self) -> Result<(), std::io::Error> {
         self.server.await
     }
 }

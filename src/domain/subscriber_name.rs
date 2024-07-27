@@ -76,7 +76,7 @@ mod tests {
     }
 
     #[test]
-    fn valid_name_is_passed_succesfully() {
+    fn valid_name_is_passed_successfully() {
         let name = "Sen meann".to_string();
         assert_ok!(SubscriberName::parse(name));
     }

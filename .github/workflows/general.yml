@@ -147,11 +147,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
-      - name: Install postgresql-client
+      - name: Install libpq
         run: sudo apt-get update && sudo apt-get install postgresql-client -y
       - uses: Swatinem/rust-cache@v2
         with:
           key: sqlx-${{ env.SQLX_VERSION }}
+      - name: Install tarpaulin
+        run: cargo install cargo-tarpaulin
       - name: Install sqlx-cli
         run:
           cargo install sqlx-cli
@@ -162,4 +164,4 @@ jobs:
       - name: Migrate database
         run: SKIP_DOCKER=true ./scripts/init_db.sh
       - name: Generate code coverage
-        run: cargo install cargo-tarpaulin && cargo tarpaulin --verbose --workspace
+        run: cargo tarpaulin --verbose --workspace

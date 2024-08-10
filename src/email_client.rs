@@ -1,4 +1,3 @@
-#![allow(unused)]
 use crate::domain::SubscriberEmail;
 use reqwest::Client;
 use secrecy::{ExposeSecret, Secret};
@@ -36,7 +35,7 @@ impl EmailClient {
     }
     pub async fn send_email(
         &self,
-        recipient: SubscriberEmail,
+        recipient: &SubscriberEmail,
         subject: &str,
         html_content: &str,
         text_content: &str,
@@ -116,7 +115,7 @@ mod tests {
     #[tokio::test]
     async fn send_email_fires_a_request_to_base_url() {
         let mock_server = MockServer::start().await;
-        let sender = SubscriberEmail::parse(SafeEmail().fake()).unwrap();
+        let _sender = SubscriberEmail::parse(SafeEmail().fake()).unwrap();
 
         Mock::given(header_exists("X-Postmark-Server-Token"))
             .and(header("Content-Type", "application/json"))
@@ -129,14 +128,14 @@ mod tests {
             .await;
 
         let _ = email_client(mock_server.uri())
-            .send_email(email(), &subject(), &content(), &content())
+            .send_email(&email(), &subject(), &content(), &content())
             .await;
     }
 
     #[tokio::test]
     async fn send_email_succeeds_if_server_return_200() {
         let mock_server = MockServer::start().await;
-        let sender = SubscriberEmail::parse(SafeEmail().fake()).unwrap();
+        let _sender = SubscriberEmail::parse(SafeEmail().fake()).unwrap();
         let email_client = email_client(mock_server.uri());
 
         Mock::given(any())
@@ -145,7 +144,7 @@ mod tests {
             .mount(&mock_server)
             .await;
         let outcome = email_client
-            .send_email(email(), &subject(), &content(), &content())
+            .send_email(&email(), &subject(), &content(), &content())
             .await;
 
         assert_ok!(outcome);
@@ -154,7 +153,7 @@ mod tests {
     #[tokio::test]
     async fn send_email_fails_if_server_return_500() {
         let mock_server = MockServer::start().await;
-        let sender = SubscriberEmail::parse(SafeEmail().fake()).unwrap();
+        let _sender = SubscriberEmail::parse(SafeEmail().fake()).unwrap();
         let email_client = email_client(mock_server.uri());
 
         Mock::given(any())
@@ -163,7 +162,7 @@ mod tests {
             .mount(&mock_server)
             .await;
         let outcome = email_client
-            .send_email(email(), &subject(), &content(), &content())
+            .send_email(&email(), &subject(), &content(), &content())
             .await;
 
         assert_err!(outcome);
@@ -172,7 +171,7 @@ mod tests {
     #[tokio::test]
     async fn send_email_time_out_if_the_server_takes_too_long() {
         let mock_server = MockServer::start().await;
-        let sender = SubscriberEmail::parse(SafeEmail().fake()).unwrap();
+        let _sender = SubscriberEmail::parse(SafeEmail().fake()).unwrap();
         let email_client = email_client(mock_server.uri());
         let response = ResponseTemplate::new(200).set_delay(std::time::Duration::from_secs(180));
 
@@ -183,7 +182,7 @@ mod tests {
             .await;
 
         let outcome = email_client
-            .send_email(email(), &subject(), &content(), &content())
+            .send_email(&email(), &subject(), &content(), &content())
             .await;
 
         assert_err!(outcome);

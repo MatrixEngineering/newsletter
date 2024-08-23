@@ -49,6 +49,7 @@ hmac = { version = "0.12.1", features = ["std"] }
 sha2 = "0.10.8"
 hex = "0.4.3"
 actix-web-flash-messages = { version = "0.4.2", features = ["cookies"] }
+actix-session = { version = "0.10.0", features = ["redis-session-rustls"] }
 # Using table-like toml syntax to avoid a super-long line !
 [dependencies.sqlx]
 version = "0.8.0"

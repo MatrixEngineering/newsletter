@@ -1,4 +1,4 @@
-name: CLI
+name: CI
 
 on:
   # NB: this differs from the book's project!
@@ -14,7 +14,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  SQLX_VERSION: 0.7.1
+  SQLX_VERSION: 0.8.1
   SQLX_FEATURES: "rustls,postgres"
 
 jobs:

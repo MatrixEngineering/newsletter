@@ -5,8 +5,8 @@ use crate::utils::{e500, see_other};
 use actix_web::body::MessageBody;
 use actix_web::dev::{ServiceRequest, ServiceResponse};
 use actix_web::error::InternalError;
+use actix_web::middleware::Next;
 use actix_web::{FromRequest, HttpMessage};
-use actix_web_lab::middleware::Next;
 use uuid::Uuid;
 
 #[derive(Clone, Copy, Debug)]

@@ -1,6 +1,6 @@
 use actix_web::{error::InternalError, http::header::LOCATION, web, HttpResponse};
 use actix_web_flash_messages::FlashMessage;
-use secrecy::Secret;
+use secrecy::SecretString;
 use sqlx::PgPool;
 
 use crate::{
@@ -12,7 +12,7 @@ use crate::{
 #[derive(serde::Deserialize)]
 pub struct FormData {
     username: String,
-    password: Secret<String>,
+    password: SecretString,
 }
 
 #[tracing::instrument(

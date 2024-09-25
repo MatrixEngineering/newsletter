@@ -1,6 +1,6 @@
 use actix_web::{web, HttpResponse};
 use actix_web_flash_messages::FlashMessage;
-use secrecy::{ExposeSecret, Secret};
+use secrecy::{ExposeSecret, SecretString};
 use sqlx::PgPool;
 
 use crate::{
@@ -11,9 +11,9 @@ use crate::{
 
 #[derive(serde::Deserialize)]
 pub struct FromData {
-    current_password: Secret<String>,
-    new_password: Secret<String>,
-    new_password_check: Secret<String>,
+    current_password: SecretString,
+    new_password: SecretString,
+    new_password_check: SecretString,
 }
 
 pub async fn change_password(

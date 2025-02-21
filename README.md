@@ -1,6 +1,6 @@
 # zero-to-production
 
-Zero2Prod is a project aimed at providing a step-by-step guide to building production-ready applications with Rust and Actix Web. This repository contains the source code and documentation to help you get started with developing web applications in Rust, following best practices and industry standards.
+newsetter is a project aimed at providing a step-by-step guide to building production-ready applications with Rust and Actix Web. This repository contains the source code and documentation to help you get started with developing web applications in Rust, following best practices and industry standards.
 
 ## Table of Contents
 

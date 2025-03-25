@@ -13,7 +13,7 @@ path = "src/main.rs"
 name = "zero2prod"
 
 [dependencies]
-config = "0.14.1"
+config = "0.15.11"
 actix-web = "4.9.0"
 tracing-actix-web = "0.7.16"
 tokio = { version = "1.44.1", features = ["macros", "rt-multi-thread"] }

@@ -10,7 +10,6 @@ Zero2Prod is a project aimed at providing a step-by-step guide to building produ
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 

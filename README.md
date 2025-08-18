@@ -1,2 +1,2 @@
 
-Rust newsetter server 
+Rust newsetter server , learn from book zero to production book

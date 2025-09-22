@@ -4453,7 +4453,7 @@ dependencies = [
  "once_cell",
  "quickcheck",
  "quickcheck_macros",
- "rand 0.8.5",
+ "rand 0.9.0",
  "reqwest",
  "secrecy",
  "serde",

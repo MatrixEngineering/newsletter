@@ -39,7 +39,7 @@ reqwest = { version = "0.12.23", default-features = false, features = [
 ] }
 
 rand = { version = "0.8.5", features = ["std_rng"] }
-thiserror = "2.0.16"
+thiserror = "2.0.17"
 anyhow = "1.0.99"
 base64 = "0.22.1"
 argon2 = { version = "0.5.3", features = ["std"] }

@@ -1,8 +1,8 @@
 use crate::telemetry::spawn_blocking_with_tracing;
 use anyhow::Context;
 use argon2::{
-    password_hash::SaltString, Algorithm, Argon2, Params, PasswordHash, PasswordHasher,
-    PasswordVerifier, Version,
+    password_hash::{rand_core::OsRng, SaltString},
+    Algorithm, Argon2, Params, PasswordHash, PasswordHasher, PasswordVerifier, Version,
 };
 use secrecy::{ExposeSecret, SecretString};
 use sqlx::PgPool;
@@ -116,7 +116,7 @@ pub async fn change_password(
 }
 
 fn compute_password_hash(password: SecretString) -> Result<SecretString, anyhow::Error> {
-    let salt = SaltString::generate(&mut rand::thread_rng());
+    let salt = SaltString::generate(&mut OsRng);
     let password_hash = Argon2::new(
         Algorithm::Argon2id,
         Version::V0x13,

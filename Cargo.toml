@@ -23,7 +23,7 @@ uuid = { version = "1.19.0", features = ["v4", "serde"] }
 tracing-log = "0.2.0"
 
 tracing = { version = "0.1.43", features = ["log"] }
-tracing-subscriber = { version = "0.3.20", features = [
+tracing-subscriber = { version = "0.3.22", features = [
     "registry",
     "env-filter",
 ] }

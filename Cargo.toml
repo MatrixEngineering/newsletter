@@ -18,7 +18,7 @@ actix-web = "4.13.0"
 tracing-actix-web = "0.7.21"
 tokio = { version = "1.49.0", features = ["macros", "rt-multi-thread"] }
 serde = { version = "1.0.228", features = ["derive"] }
-chrono = "0.4.43"
+chrono = "0.4.44"
 uuid = { version = "1.20.0", features = ["v4", "serde"] }
 tracing-log = "0.2.0"
 
